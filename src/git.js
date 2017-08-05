@@ -1006,6 +1006,38 @@
       return this.diff(command, Git._responseHandler(next, 'DiffSummary'));
    };
 
+   Git.prototype.mergeBase = function (options, then) {
+      var command = ["merge-base"]
+
+      if (Array.isArray(options)) {
+         command.push.apply(command, options);
+      }
+
+      if (typeof arguments[arguments.length - 1] === 'function') {
+         then = arguments[arguments.length - 1];
+      }
+
+      return this._run(command, function (err, data) {
+         then && then(err, data);
+      });
+   };
+
+   Git.prototype.lsFiles = function (options, then) {
+      var command = ["ls-files"]
+
+      if (Array.isArray(options)) {
+         command.push.apply(command, options);
+      }
+
+      if (typeof arguments[arguments.length - 1] === 'function') {
+         then = arguments[arguments.length - 1];
+      }
+
+      return this._run(command, function (err, data) {
+         then && then(err, data);
+      });
+   }
+
    /**
     * rev-parse.
     *
